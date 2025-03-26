@@ -104,9 +104,6 @@ Function CheckDay(RngRow As Integer, Day As String) As Boolean
     SkipReturn = True
 
     ErrorHandler :
-    ' Bring the workbook and specific sheet to the front
-    'Workbooks("RPClock.xlsm").Activate
-    'Sheets("Sheet1").Activate
     ' Reference the workbook
     Set wb = Workbooks("RPClock.xlsm") ' Replace with your workbook name
     
