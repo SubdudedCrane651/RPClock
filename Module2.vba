@@ -72,79 +72,26 @@ Sub DisableTimer()
     Application.OnTime EarliestTime : = CountDown, Procedure : = "Reset", Schedule : = False
 End Sub
 
-Function CheckDay(Rng As Integer, Day As String) As Boolean
-
+Function CheckDay(RngRow As Integer, Day As String) As Boolean
+    ' Verify if the current day matches with the checkbox configuration
     Dim shtRng As Range
     Dim addRng As String
-
-    Set shtRng = Range("G" + Mid(Str(Rng), 2), "M" + Mid(Str(Rng), 2))
-
-    On Error Resume Next
+    Set shtRng = Range("G" & CStr(RngRow), "M" & CStr(RngRow))
+    CheckDay = False
 
     For Each cb In ActiveSheet.CheckBoxes
         If cb.Value = 1 Then
             addRng = ActiveSheet.Shapes(cb.Name).TopLeftCell.Address
-
             Select Case addRng
-
-                Case Range("G" + Mid(Str(Rng), 2)).Address
-                    If Day = "Sunday" Then
-                        CheckDay = True
-                        Exit For
-                    Else
-                        CheckDay = False
-                    End If
-
-                Case Range("H" + Mid(Str(Rng), 2)).Address
-                    If Day = "Monday" Then
-                        CheckDay = True
-                        Exit For
-                    Else
-                        CheckDay = False
-                    End If
-
-                Case Range("I" + Mid(Str(Rng), 2)).Address
-                    If Day = "Tuesday" Then
-                        CheckDay = True
-                        Exit For
-                    Else
-                        CheckDay = False
-                    End If
-
-                Case Range("J" + Mid(Str(Rng), 2)).Address
-                    If Day = "Wednesday" Then
-                        CheckDay = True
-                        Exit For
-                    Else
-                        CheckDay = False
-                    End If
-
-                Case Range("K" + Mid(Str(Rng), 2)).Address
-                    If Day = "Thursday" Then
-                        CheckDay = True
-                        Exit For
-                    Else
-                        CheckDay = False
-                    End If
-
-                Case Range("L" + Mid(Str(Rng), 2)).Address
-                    If Day = "Friday" Then
-                        CheckDay = True
-                        Exit For
-                    Else
-                        CheckDay = False
-                    End If
-
-                Case Range("M" + Mid(Str(Rng), 2)).Address
-                    If Day = "Saturday" Then
-                        CheckDay = True
-                        Exit For
-                    Else
-                        CheckDay = False
-                    End If
-
+                Case Range("G" & CStr(RngRow)).Address: CheckDay = Day = "Sunday"
+                Case Range("H" & CStr(RngRow)).Address: CheckDay = Day = "Monday"
+                Case Range("I" & CStr(RngRow)).Address: CheckDay = Day = "Tuesday"
+                Case Range("J" & CStr(RngRow)).Address: CheckDay = Day = "Wednesday"
+                Case Range("K" & CStr(RngRow)).Address: CheckDay = Day = "Thursday"
+                Case Range("L" & CStr(RngRow)).Address: CheckDay = Day = "Friday"
+                Case Range("M" & CStr(RngRow)).Address: CheckDay = Day = "Saturday"
             End Select
+            If CheckDay Then Exit For
         End If
-    Next
-
+    Next cb
 End Function
